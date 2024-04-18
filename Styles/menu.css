@@ -1,0 +1,19 @@
+
+
+.opciones{
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Crea dos columnas de igual tamaño */
+    grid-gap: 20px; /* Espacio entre las columnas */
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20%;
+}
+
+main{
+    border: 2px solid black;
+}
+
+.ultima-opcion{
+    margin-left: 95px;
+}
