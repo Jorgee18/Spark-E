@@ -31,6 +31,10 @@ form, p{
     width: 70%;
 }
 
+p a {
+    text-decoration: none;
+}
+
 p {
     text-align: center;
     font-size: 80%;

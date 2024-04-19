@@ -4,6 +4,10 @@ body{
     padding-top: 20%;
 }
 
+p a, form a{
+    text-decoration: none;
+}
+
 .press-start {
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
