@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.press-start {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+}
+
 /* The switch - the box around the slider */
 .switch {
     position: relative;
@@ -68,9 +77,66 @@
 
   .unidad-temperatura {
     margin: 5%;
+    font-weight: bold;
   }
 
   .boton {
     margin-left: 5%;
     margin-top: 5%;
   }
+
+  .grados {
+    font-size: 8vw;
+    color: red;
+    margin-right: 5%;
+  } 
+
+  .texto-alerta {
+    font-weight: bold;
+    font-size: 4vw;
+    border: 0.5vw solid red;
+    padding: 1%;
+  }
+
+  .termometro {
+    width: 10%;
+    height: auto;
+    margin-right: 5%;
+  }
+
+  .grafico {
+    width: 70%;
+    height: auto;
+  }
+
+  .titulo-grafico {
+    font-weight: bold;
+    font-size: 4vw;
+  }
+
+  .texto-superpuesto {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 6vw;
+    font-weight: bold;
+    text-align: center;
+    padding: 10%;
+}
+
+.grafico-texto {
+  position: relative  ;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  nav div h1 {
+      font-size: 150%;
+  }
+}

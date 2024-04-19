@@ -1,19 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-
-.opciones{
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Crea dos columnas de igual tamaño */
-    grid-gap: 20px; /* Espacio entre las columnas */
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 20%;
+.press-start {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
 }
 
 main{
+    background-color: white;
     border: 2px solid black;
 }
 
-.ultima-opcion{
-    margin-left: 95px;
+div h1 {
+    color: black;
+}
+
+main span {
+    border: 2px solid black;
+    width: 40%;
+}
+
+@media screen and (max-width: 600px){
+    div h1{
+        font-size: 150%;
+    }
+
+    img{
+        width: 95%;
+        height: 95%;
+    }
 }

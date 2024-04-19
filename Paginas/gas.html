@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicion de gas</title>
+    <link href="../Styles/gas.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+    <!--
+        display: flex;
+        flex-direction
+        flex-wrap
+        flex-flow: direction wrap;
+        justify-content
+        align-content
+        align-items    
+    -->
+
+<body class="d-flex justify-content-center flex-column align-content-center">
+    <header>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid flex-nowrap align-items-center align-content-center justify-content-center">
+                <a class="navbar-brand d-inline m-0" href="menu.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" role="button" width="29" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                    </svg>
+                </a>
+                <h1 class="press-start d-inline m-0">Medicion de Gas</h1>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container-lg">
+        <!--
+        <p>C02</p>
+        <p>C0</p>
+        <p>CH4</p>
+        <p>NOX</p>-->
+        <div class="container-lg mt-3">
+            <div class="row">
+
+                <div class="col-6  d-flex flex-column justify-content-center align-content-center align-items-center">
+                    <p style="border: 2px solid black;"><strong>C02</strong></p>
+                    <img style="border: 2px solid black;" src="../Assets/mediciongas.png" alt="co2">
+                </div>
+
+                <div class="col-6 d-flex flex-column justify-content-center align-content-center align-items-center">
+                    <p style="border: 2px solid black;"><strong>C0</strong></p>
+                    <img style="border: 2px solid black;" src="../Assets/mediciongas.png" alt="co">
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-6 d-flex flex-column justify-content-center align-content-center align-items-center">
+                    <p style="border: 2px solid black;"><strong>CH4</strong></p>
+                    <img src="../Assets/mediciongas.png" alt="ch4">
+                </div>
+
+                <div class="col-6 d-flex flex-column justify-content-center align-content-center align-items-center">
+                    <p style="border: 2px solid black;"><strong>NOX</strong></p>
+                    <img src="../Assets/mediciongas.png" alt="nox">
+                </div>
+            </div>
+        </div>
+        <p><strong>Recuerda que los niveles seguros de CO2 son de hasta 2000 ppm y los niveles seguros de CO son de hasta 9 ppm.</strong></p>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous">
+    </script>
+    <script src="../Scripts/gas.js"></script>
+</body>
+</html>

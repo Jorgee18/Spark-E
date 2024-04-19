@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.press-start {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
+}
+
+main h2, main h3 {
+    margin-top: 2%;
+}
+
+main {
+    text-align: justify;
+    padding: 2%;
+    margin-top: 1%;
+}
+
+@media only screen and (max-width: 600px) {
+    nav div h1 {
+        font-size: 150%;
+    }
+}
