@@ -9,7 +9,6 @@
 
 main{
     background-color: white;
-    border: 2px solid black;
 }
 
 div h1 {
@@ -17,7 +16,6 @@ div h1 {
 }
 
 main span {
-    border: 2px solid black;
     width: 40%;
 }
 
