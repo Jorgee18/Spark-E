@@ -49,14 +49,14 @@
         <h2 class="press-start">Spark-E</h2>
         <form class="needs-validation d-flex flex-column gap-2" action="../index.html" novalidate>
             <div>
-                <input type="text" class="form-control" name="newnombre" placeholder="Nombre de usuario" required minlength="5" maxlength="15">
+                <input type="text" class="form-control" name="newnombre" placeholder="Nombre de usuario" required minlength="3" maxlength="15" pattern="^[A-Za-zÁ-Úá-ú]+$">
                 <div class="invalid-feedback m-0 mb-1">
-                    Debe tener más de 5 caracteres y menos de 15
+                    Debe tener entre 3 a 15 caracteres y solo contener letras
                 </div>
             </div>
             
             <div>
-                <input type="text" class="form-control" name="newrut" placeholder="RUT(sin puntos, con guión y dígito verificador)" required>
+                <input type="text" class="form-control" name="newrut" placeholder="RUT (sin puntos, con guión y dígito verificador)" required pattern="^[0-9]{1,10}-([0-9]|K|k)$">
                 <div class="invalid-feedback m-0 mb-1">
                     Debe ser un rut válido
                 </div>
@@ -77,9 +77,9 @@
             </select>
 
             <div>
-                <input type="password" class="form-control" name="newpassword" placeholder="Crear Contraseña" required minlength="8" maxlength="20">
+                <input type="password" class="form-control" name="newpassword" placeholder="Crear Contraseña" required minlength="8" maxlength="20" pattern="^[A-Za-zÁ-Úá-ú0-9]+$">
                 <div class="invalid-feedback m-0 mb-1">
-                    Debe tener más de 8 caracteres y menos de 20
+                    Debe tener entre 8 a 20 caracteres y solo contener letras o números
                 </div>
             </div>
 

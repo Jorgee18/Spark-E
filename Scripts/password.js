@@ -17,3 +17,12 @@
         }, false)
     })
 })()
+
+const newpassword = document.querySelector('[name="newpassword"]');
+const confirmpassword = document.querySelector('[name="confirmpassword"]');
+validar_password = function(event) {
+    confirmpassword.pattern = `^${event.target.value}$`;
+}
+
+newpassword.addEventListener('change', validar_password);
+newpassword.addEventListener('blur', validar_password);

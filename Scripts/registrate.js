@@ -48,7 +48,7 @@ selector_regiones.addEventListener('change', function(event) {
     fetch('../Database/comunas-regiones.json')
         .then(respuesta => respuesta.json())
         .then(regiones => {
-            let region_escogida = selector_regiones.value;
+            let region_escogida = event.target.value;
             let cont = 1;
             regiones.forEach( region => {
                 if(region.region === region_escogida){
@@ -66,3 +66,13 @@ selector_regiones.addEventListener('change', function(event) {
             console.error('Error:', error);
         });
 });
+
+
+const newpassword = document.querySelector('[name="newpassword"]');
+const confirmpassword = document.querySelector('[name="confirmpassword"]');
+validar_password = function(event) {
+    confirmpassword.pattern = `^${event.target.value}$`;
+}
+
+newpassword.addEventListener('change', validar_password);
+newpassword.addEventListener('blur', validar_password);
