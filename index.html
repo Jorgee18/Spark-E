@@ -20,10 +20,22 @@
             <h3>Ingrese su nombre para iniciar sesión</h3>
 
             <form class="needs-validation d-flex flex-column gap-2" action="Paginas/menu.html" novalidate>
-                <input type="text" class="form-control" name="user-name"
-                        placeholder="Ingrese su nombre aquí" required>
-                <input type="password" class="form-control" name="password"
-                        placeholder="Ingrese contraseña" required>
+                <div>
+                    <input type="text" class="form-control" name="username"
+                            placeholder="Ingrese su nombre aquí" required minlength="5" maxlength="15">
+                    <div class="invalid-feedback m-0 mb-1">
+                        Debe tener más de 5 caracteres y menos de 15
+                    </div>
+                </div>
+
+                <div>
+                    <input type="password" class="form-control" name="password"
+                            placeholder="Ingrese contraseña" required minlength="8" maxlength="20">
+                    <div class="invalid-feedback m-0 mb-1">
+                        Debe tener más de 8 caracteres y menos de 20
+                    </div>
+                </div>
+
                 <a href="Paginas/password.html" class="d-block text-center mb-1"><strong>¿Has olvidado tu contraseña?</strong></a>
                 <button type="submit" class="btn btn-dark col-12">Continuar</button>
             </form>

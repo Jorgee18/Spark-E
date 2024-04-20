@@ -26,12 +26,7 @@ p {
 }
 
 form {
-    border: 2px solid  red;
     width: 70%;
-}
-
-body {
-    border: 2px solid  red;
 }
 
 img {
@@ -49,7 +44,6 @@ img {
     }
 
     form {
-        border: 2px solid  red;
         width: 100%;
     }
 
