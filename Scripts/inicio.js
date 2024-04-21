@@ -15,14 +15,17 @@
                 }
             }
 
-            event.preventDefault()
-            event.stopPropagation()
+            
             if ( is_valid == true) {
                 //Guardar en la base de datos (actualmente json)
                 const datos = new FormData(event.target);
                 const datosJson = JSON.stringify(Object.fromEntries(datos.entries()));
                 //Guardar los datos en archivo json
-                window.location.href = "Spark-E/Paginas/menu.html";
+                //window.location.href = "Spark-E/Paginas/menu.html";
+            }
+            else{
+                event.preventDefault()
+                event.stopPropagation()
             }
 
             form.classList.add('was-validated')
