@@ -1,5 +1,7 @@
 # Spark-E
 
+
+
 <div align="center">
 
 [![css3-badge-sm]][css3-web]
@@ -13,6 +15,14 @@
 [![ios-development-badge-sm]][ios-development-web] [![android-development-badge-sm]][android-development-web]
 
 </div>
+
+## Integrantes
+
+<ul>
+    <li>Joseph Donoso</li>
+    <li>Jorge Villarreal</li>
+    <li>Sebastián Yáñez</li>
+</ul>
 
 ## Descripción
 
