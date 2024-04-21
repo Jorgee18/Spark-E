@@ -5,6 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Agregar un evento de clic al icono
     iconoFlecha.addEventListener('click', function() {
     // Redirigir al usuario a la URL deseada
-        window.location.href = 'registrate.html';
+        window.location.href = 'menu.html';
     });
 });

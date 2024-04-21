@@ -10,20 +10,24 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body class="container-fluid d-flex">
-    <main class="container-fluid d-flex flex-column justify-content-center align-content-center align-items-center">
+<body class="container-fluid d-flex mt-5">
+    <main class="container-fluid d-flex flex-column justify-content-center align-content-center align-items-center mt-5">
             <h1 class="press-start"><strong>Spark-E</strong></h1>
             <img src="Assets/mascota.png" alt="Robot">
             <h2 class="press-start">Bienvenidos</h2>
             <h3>Ingrese su nombre para iniciar sesión</h3>
 
-            <form class="needs-validation d-flex flex-column gap-2" action="Paginas/menu.html" novalidate>
+            <form class="needs-validation d-flex flex-column gap-2" novalidate>
                 <div>
                     <input type="text" class="form-control" name="username"
                             placeholder="Ingrese su nombre aquí" required minlength="3" maxlength="15" pattern="^[A-Za-zÁ-Úá-ú]+$">
                     <div class="invalid-feedback m-0 mb-1">
                         Debe tener entre 3 a 15 caracteres y solo contener letras
                     </div>
+                    <div class="invalid-name">
+                        El nombre o la contraseña es incorrecta
+                    </div>
+
                 </div>
 
                 <div>

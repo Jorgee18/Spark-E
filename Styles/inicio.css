@@ -1,7 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-html, body , main{
-    height: 100%;
-}
 
 p a, form a{
     text-decoration: none;
@@ -12,6 +9,13 @@ p a, form a{
     font-weight: 400;
     font-style: normal;
     color: black;
+}
+
+.invalid-name{
+    display: none;
+    width: 100%;
+    font-size: .875em;
+    color: #dc3545;
 }
 
 main h3 {
