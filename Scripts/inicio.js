@@ -22,7 +22,7 @@
                 const datos = new FormData(event.target);
                 const datosJson = JSON.stringify(Object.fromEntries(datos.entries()));
                 //Guardar los datos en archivo json
-                window.location.href = "../Paginas/menu.html";
+                window.location.href = "Paginas/menu.html";
             }
 
             form.classList.add('was-validated')
