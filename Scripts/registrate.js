@@ -18,6 +18,7 @@
     })
 })()
 
+//Selector de regiones y comunas
 const selector_regiones = document.querySelector("#lista-regiones")
 
 fetch('../Database/comunas-regiones.json')
@@ -26,7 +27,6 @@ fetch('../Database/comunas-regiones.json')
         let cont = 1;
         regiones.forEach( region => {
             let option = document.createElement('option');
-            option.value = region.region;
             option.innerHTML += `${region.region}`;
             selector_regiones.appendChild(option);
             cont += 1;
@@ -48,13 +48,13 @@ selector_regiones.addEventListener('change', function(event) {
     fetch('../Database/comunas-regiones.json')
         .then(respuesta => respuesta.json())
         .then(regiones => {
+            console.log(event.target.value);
             let region_escogida = event.target.value;
             let cont = 1;
             regiones.forEach( region => {
                 if(region.region === region_escogida){
                     region.comunas.forEach( comuna => {
                         let option = document.createElement('option');
-                        option.value = comuna;
                         option.innerHTML += `${comuna}`;
                         selector_comunas.appendChild(option);
                         cont += 1;
@@ -67,7 +67,7 @@ selector_regiones.addEventListener('change', function(event) {
         });
 });
 
-
+//Validador del confirmar la contraseña 
 const newpassword = document.querySelector('[name="newpassword"]');
 const confirmpassword = document.querySelector('[name="confirmpassword"]');
 validar_password = function(event) {

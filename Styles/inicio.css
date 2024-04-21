@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-body{
-    padding-top: 20%;
+html, body , main{
+    height: 100%;
 }
 
 p a, form a{
@@ -15,7 +14,7 @@ p a, form a{
     color: black;
 }
 
-div h3 {
+main h3 {
     font-size: 15px;
     color: black;
     text-align: center;
