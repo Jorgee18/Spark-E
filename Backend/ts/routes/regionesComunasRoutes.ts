@@ -1,11 +1,11 @@
-const regionesComunasController = require("../controllers/regionesComunasController")
+const regionesComunasController = require("../controllers/regionesComunasController");
 
 const regionesComunas = (express:any) => {
     const router = express.Router();
 
-    router.get('/', regionesComunasController.getRegiones);
+    router.get('/regiones', regionesComunasController.getRegiones);
 
-    router.post('/:cod_region', regionesComunasController.getComunasByCod);
+    router.get('/regiones/:cod_region/comunas', regionesComunasController.getComunasByCod);
 
     return router;
 };
