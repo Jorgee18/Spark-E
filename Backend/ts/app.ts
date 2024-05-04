@@ -13,16 +13,11 @@ const configuracion={
 }
 
 //Importación de las rutas a utilizar
-const usuariosRoutes = require('./Routes/usuarios')(express);
-const regionesComunasRoutes = require('./Routes/regionesComunas')(express);
+const usuariosRoutes = require('./routes/usuariosRoutes')(express);
+const regionesComunasRoutes = require('./routes/regionesComunasRoutes')(express);
 app.use('/usuarios', usuariosRoutes);
 app.use('/api.regiones-y-comunas-chile', regionesComunasRoutes);
 
-/*
-app.get('/',jsonParser,(req:any, res:any)=>{
-    res.json("Hola Mundo");
-});
-*/
 
 app.listen(configuracion,()=>{
       console.log(`Empezando servidor ${configuracion.hostname} en el puerto ${configuracion.port}`)
