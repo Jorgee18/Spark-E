@@ -3,9 +3,13 @@ const regionesComunasController = require("../controllers/regionesComunasControl
 const regionesComunas = (express:any) => {
     const router = express.Router();
 
-    router.get('/regiones', regionesComunasController.getRegiones);
+    router.get('/regiones', regionesComunasController.getListRegiones);
 
-    router.get('/regiones/:cod_region/comunas', regionesComunasController.getComunasByCod);
+    router.get('/regiones/:cod_region', regionesComunasController.getRegionByCod);
+    
+    router.get('/regiones/:cod_region/comunas', regionesComunasController.getListComunasByRegion);
+
+    router.get('/comunas/:cod_comuna', regionesComunasController.getComunaByCod);
 
     return router;
 };

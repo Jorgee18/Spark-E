@@ -1,5 +1,11 @@
 GET http://127.0.0.1:3360/api.regiones-y-comunas-chile/regiones
 ###
 
-GET http://127.0.0.1:3360/api.regiones-y-comunas-chile/regiones/15/comunas
+GET http://127.0.0.1:3360/api.regiones-y-comunas-chile/regiones/01
+###
+
+GET http://127.0.0.1:3360/api.regiones-y-comunas-chile/regiones/01/comunas
+###
+
+GET http://127.0.0.1:3360/api.regiones-y-comunas-chile/comunas/01101
 ###
