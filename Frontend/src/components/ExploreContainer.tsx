@@ -1,14 +1,19 @@
 import './ExploreContainer.css';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton} from '@ionic/react';
 
 interface ContainerProps { }
 
-const ExploreContainer: React.FC<ContainerProps> = () => {
+const FormatPage: React.FC<ContainerProps> = () => {
   return (
-    <div id="container">
-      <strong>Ready to create an app?</strong>
-      <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-    </div>
+  <IonHeader>
+    <IonToolbar>
+      <IonButtons slot="start">
+        <IonBackButton></IonBackButton>
+      </IonButtons>
+      <IonTitle>Page Two</IonTitle>
+    </IonToolbar>
+  </IonHeader>
   );
 };
 
-export default ExploreContainer;
+export default FormatPage;

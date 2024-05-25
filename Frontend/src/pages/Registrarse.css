@@ -1,0 +1,24 @@
+
+p {
+    text-align: center;
+}
+
+#msgErrorUserName{
+    display: none;
+}
+
+#msgErrorRut{
+    display: none;
+}
+
+#msgErrorEmail{
+    display: none;
+}
+
+#msgErrorPassword{
+    display: none;
+}
+
+#msgErrorConfirmPassword{
+    display: none;
+}
