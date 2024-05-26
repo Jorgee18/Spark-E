@@ -1,4 +1,4 @@
-import { IonContent, IonPage, IonSelect, IonSelectOption, IonLabel, IonItem, IonInput} from '@ionic/react';
+import { IonContent, IonPage, IonSelect, IonSelectOption, IonLabel, IonItem, IonInput, IonText} from '@ionic/react';
 import Header from '../components/Header';
 import Button from '../components/Button'
 import React, { useState, useEffect } from 'react';
@@ -16,13 +16,15 @@ const Registrarse: React.FC = () => {
   const expRegxStrPassword = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
   const expRegxStrRut = /^[0-9]+[-|‐]{1}[0-9kK]{1}$/
   
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  const [selectedComuna, setSelectedComuna] = useState<string | null>(null);
   const [fieldUsername, setUsername] = useState({value:'', className: '', errorText: '_'}); //Username
   const [fieldRut, setRut] = useState({value:'', className: '', errorText: '_'}); //Rut
   const [fieldEmail, setEmail] = useState({value:'', className: '', errorText: '_'}); //Email
   const [fieldPassword, setPassword] = useState({value:'', className: '', errorText: '_'}); //Password
   const [fieldConfirmPassword, setConfirmPassword] = useState({value:'', className: '', errorText: '_'}); //Confirmar Password
+  const [fieldRegion, setRegion] = useState({value:'', className:'', errorText: ''}); //Regiones
+  const [fieldComuna, setComuna] = useState({value:'', className:'', errorText: ''}); //Comunas
+  const [listaRegiones, setRegiones] = useState([{region: '', comunas: []}]); //Regiones opciones
+  const [regSel, setRegSel] = useState([]); //Comunas opciones
 
   const [isConfirmPasswordDisabled, setConfirmPasswordDisabled] = useState(true);
   
@@ -42,6 +44,16 @@ const Registrarse: React.FC = () => {
     
     //Email
     if(!validEmail()){
+      formValid = false;
+    }
+
+    //Email
+    if(!validRegion()){
+      formValid = false;
+    }
+
+    //Email
+    if(!validComuna()){
       formValid = false;
     }
     
@@ -135,6 +147,32 @@ const Registrarse: React.FC = () => {
     return true;
   }
 
+  const validRegion = () => {
+    const RegionValue = fieldRegion.value;
+    if(RegionValue.length == 0){
+      setRegion(prevState => ({
+        ...prevState,
+        className: "display-true",
+        errorText: "La región es un campo obligatorio"
+      }));
+      return false;
+    }    
+    return true;
+  }
+
+  const validComuna = () => {
+    const ComunaValue = fieldComuna.value;
+    if(ComunaValue.length == 0){
+      setComuna(prevState => ({
+        ...prevState,
+        className: "display-true",
+        errorText: "La comuna es un campo obligatorio"
+      }));
+      return false;
+    }    
+    return true;
+  }
+
   const validPassword = () => {
     const PasswordValue = fieldPassword.value;
 
@@ -198,61 +236,26 @@ const Registrarse: React.FC = () => {
     }
     return true;
   }
-
-useEffect(() => {
-  fetch('./src/pages/comunas-regiones.json')
-    .then(respuesta => respuesta.json())
-    .then((data: any) => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}, []);
-
-/*useEffect(() => {
-  fetch('./comunas-regiones.json', { cache: 'no-store' })
-    .then(respuesta => {
-      if (!respuesta.ok) {
-        throw new Error(`HTTP error! status: ${respuesta.status}`);
-      }
-      return respuesta.json();
-    })
-    .then((data: any) => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}, []);*/
-
-/*
-const fs = require('fs');
-
-fs.readFile('./comunas-regiones.json', 'utf8', (err:any, data:any) => {
-  if (err) {
-    console.error(err);
-    return;
+  
+  const handleRegionChange = (e: CustomEvent) => {
+    const nombreRegion = e.detail.value;
+    const newClassName = ""
+    const newErrorText = "";
+    setRegion({ value: nombreRegion, className: newClassName, errorText: newErrorText });
+    const selectedRegion = listaRegiones?.find(region => region.region === nombreRegion);
+    if (selectedRegion) {
+      setRegSel(selectedRegion.comunas); 
+    }
+    setComuna(prevState => ({
+      ...prevState, 
+      value: "",
+    })); 
+    validComuna();
   }
-  console.log(data);
-});*/
-
-  /*const regiones = [
-    { value: 'region1', label: 'Región 1' },
-    { value: 'region2', label: 'Región 2' },
-    // Agrega más regiones según sea necesario
-  ];*/
-
-  /*const fs = require('fs');
-  let data = fs.readFilec('../public/comunas-regiones.json');
-  console.log(data)
-  let personas=JSON.parse(data);
-  console.log(personas);*/
-  const [fieldRegiones, setRegiones] = useState([{region:String, comunas: []}]);
-
+  
   useEffect(() => {
     // Realiza la solicitud fetch para obtener los datos del archivo JSON
-    fetch('./src/pages/comunas-regiones.json')
+    fetch('../public/comunas-regiones.json')
       .then(response => response.json())
       .then(data => {
         setRegiones(data);
@@ -261,26 +264,12 @@ fs.readFile('./comunas-regiones.json', 'utf8', (err:any, data:any) => {
         console.error('Error al leer el archivo JSON:', error);
       });
   }, []);
-
+  
   return (
-    <IonPage id='Registrarse' >
+    <IonPage id='Registrarse'>
       <Header title="Crear Cuenta"/>
       <IonContent fullscreen>
-      <div>
-        <h1>Lista de Regiones y Comunas</h1>
-        <ul>
-          {fieldRegiones.map((region, index) => (
-            <li key={index}>
-              <ul>
-                {region.comunas.map((comuna, i) => (
-                  <li key={i}>{comuna}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <form className="ion-padding" onSubmit={handleSubmit}>
+      <form className="ion-padding" onSubmit={handleSubmit} noValidate>
             <IonInput 
                 id="fieldName"
                 value={fieldUsername.value}
@@ -290,6 +279,7 @@ fs.readFile('./comunas-regiones.json', 'utf8', (err:any, data:any) => {
                 fill="outline"
                 placeholder="Ingrese un nombre de usuario"
                 errorText={fieldUsername.errorText}
+                maxlength={15}
                 type="text" 
                 onIonChange ={validUsername}
                 onIonInput={e => {
@@ -309,9 +299,9 @@ fs.readFile('./comunas-regiones.json', 'utf8', (err:any, data:any) => {
                 labelPlacement="floating"
                 fill="outline"
                 placeholder="Ingrese su Rut"
+                maxlength={10}
                 errorText={fieldRut.errorText}
-                type="number" 
-                //pattern={expRegxStrRut}
+                type="text" 
                 onIonChange ={validRut}
                 onIonInput={e => {
                   const newValue = e.detail.value || '';
@@ -343,30 +333,42 @@ fs.readFile('./comunas-regiones.json', 'utf8', (err:any, data:any) => {
             <IonItem>
                 <IonLabel>Región</IonLabel>
                 <IonSelect 
-                value={selectedRegion} 
-                placeholder="Selecciona una región" 
-                onIonChange={e => setSelectedRegion(e.detail.value)} 
+                placeholder="Selecciona una región"
+                value={fieldRegion.value}
+                onIonChange={handleRegionChange} 
                 interface="popover">
                     <IonSelectOption disabled value="">Selecciona una región</IonSelectOption>
-                    {/*regiones.map(region => (
-                        <IonSelectOption key={region.value} value={region.value}>
-                            {region.label}
-                        </IonSelectOption>
-                    ))*/}
+                    {listaRegiones.map((region, index ) => (
+                        <IonSelectOption key={index} value={region.region}>
+                          {region.region}
+                        </IonSelectOption>  
+                    ))}
                 </IonSelect>
             </IonItem>
+            <IonText className={fieldRegion.className + " margin-b"} color="danger">{fieldRegion.errorText}</IonText>
 
             <IonItem>
                 <IonLabel>Comuna</IonLabel>
-                <IonSelect value={selectedComuna} placeholder="Selecciona una comuna" onIonChange={e => setSelectedComuna(e.detail.value)} interface="popover">
+                <IonSelect
+                id="fieldComuna"
+                placeholder="Selecciona una comuna"
+                value={fieldComuna.value}
+                interface="popover"
+                onIonChange ={e => {
+                  const newValue = e.detail.value || '';
+                  const newClassName = "";
+                  const newErrorText = "_";
+                  setComuna({ value: newValue, className: newClassName,errorText: newErrorText });
+                }}>
                     <IonSelectOption disabled value="">Selecciona una comuna</IonSelectOption>
-                    {/*comunas.map(comuna => (
-                        <IonSelectOption key={comuna.value} value={comuna.value}>
-                            {comuna.label}
+                    {regSel?.map((comuna, index) => (
+                        <IonSelectOption key={index} value={comuna}>
+                            {comuna}
                         </IonSelectOption>
-                    ))*/}
+                    ))}
                 </IonSelect>
             </IonItem>
+            <IonText className={fieldComuna.className + " margin-b"} color="danger">{fieldComuna.errorText}</IonText>
 
             <IonInput 
                 id="fieldPassword" 
@@ -378,14 +380,15 @@ fs.readFile('./comunas-regiones.json', 'utf8', (err:any, data:any) => {
                 fill="outline" 
                 placeholder="Ingrese su contraseña" 
                 errorText={fieldPassword.errorText}
+                maxlength={20}
+                counter={true}
                 //pattern={expRegxStrPassword}
                 onIonChange={validPassword}
                 onIonInput={e => {
                   const newValue = e.detail.value || '';
-                  const newClassName = "";
+                  const newClassName = ""
                   const newErrorText = "_";
                   setPassword({ value: newValue, className: newClassName, errorText: newErrorText });
-                  setConfirmPasswordDisabled(newValue.length == 0);
                 }}>
             </IonInput>
 
@@ -399,6 +402,8 @@ fs.readFile('./comunas-regiones.json', 'utf8', (err:any, data:any) => {
                 fill="outline"
                 placeholder="Reingrese su contraseña" 
                 errorText={fieldConfirmPassword.errorText}
+                maxlength={20}
+                counter={true}
                 onIonChange={validConfirmPassword}
                 onIonInput={e => {
                   const newValue = e.detail.value || '';

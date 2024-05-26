@@ -126,14 +126,6 @@ const IniciarSesion: React.FC = () => {
     return true;
   }
 
-  //const expRegxStrUserName = /^[a-zA-Z][a-zA-Z0-9-_\. ]{1,15}$/;
-  //const expRegxStrPassword = /^(?=.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
-  //const expRegxStrUserName = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$;
-  //const expRegxStrPassword = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
-  //const hola = () => {
-  //  console.log("Hola mundo");
-  //};
-
   return (
     <IonPage id="IniciarSesion">
       <Header title="Iniciar Sesión"/>
@@ -144,7 +136,7 @@ const IniciarSesion: React.FC = () => {
 
         <p className="press-start welcome"><strong>Bienvenido</strong></p>
 
-        <form className="ion-padding" onSubmit={handleSubmit}>
+        <form className="ion-padding" onSubmit={handleSubmit} noValidate>
           <IonInput 
             id="fieldUserName" 
             type="text"
@@ -155,6 +147,7 @@ const IniciarSesion: React.FC = () => {
             value= {fieldUsernameI.value}
             errorText= {fieldUsernameI.errorText}
             className= {fieldUsernameI.className}
+            maxlength={15}
             onIonChange={validUsernameI}
             onIonInput={e => {
               const newValue = e.detail.value || '';
@@ -175,6 +168,8 @@ const IniciarSesion: React.FC = () => {
             value={fieldPasswordI.value}
             errorText={fieldPasswordI.errorText}
             className={fieldPasswordI.className}
+            maxlength={20}
+            counter={true}
             onIonChange={validPasswordI}
             onIonInput={e => {
               const newValue = e.detail.value || '';

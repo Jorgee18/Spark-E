@@ -151,7 +151,7 @@ const Password: React.FC = () => {
           <img src="../public/mascota.png" alt="Mascota Spark-E" />
         </div>
         
-        <form className="ion-padding" onSubmit={handleSubmit}>
+        <form className="ion-padding" onSubmit={handleSubmit} noValidate>
           <IonInput 
               id="fieldEmail"
               value={fieldEmail.value}
@@ -182,6 +182,8 @@ const Password: React.FC = () => {
               placeholder="Ingrese su nueva contraseña"
               errorText={fieldNewPassword.errorText}
               type="password" 
+              maxlength={20}
+              counter={true}
               onIonChange ={validNewPassword}
               onIonInput={e => {
                 const newValue = e.detail.value || '';
@@ -201,7 +203,9 @@ const Password: React.FC = () => {
               fill="outline"
               placeholder="Vuelva a ingresar su nueva contraseña"
               errorText={fieldConfirmPassword.errorText}
-              type="password" 
+              type="password"
+              maxlength={20}
+              counter={true} 
               onIonChange ={validConfirmPassword}
               onIonInput={e => {
                 const newValue = e.detail.value || '';
@@ -221,7 +225,10 @@ const Password: React.FC = () => {
             fill="outline"
             placeholder="Ingrese su código de confirmación"
             errorText={fieldCode.errorText}
-            type="number" 
+            type="number"
+            minlength={3}
+            maxlength={5}
+            counter={true} 
             onIonChange ={validCode}
             onIonInput={e => {
               const newValue = e.detail.value || '';
