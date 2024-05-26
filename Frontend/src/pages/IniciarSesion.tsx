@@ -1,13 +1,19 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton,IonNavLink, IonRouterLink, IonItem, IonCheckbox, IonInput, IonLabel, IonText} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton,IonNavLink, IonRouterLink, IonItem, IonCheckbox, IonInput, IonLabel, IonText, IonIcon} from '@ionic/react';
 import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import Header from '../components/Header';
+import Button from '../components/Button'
 import './IniciarSesion.css';
 import '../theme/variables.css';
+//import {useForm} from 'react-hook-form';
+//npm install react-hook-form
 
 const IniciarSesion: React.FC = () => {
+
   const history = useHistory();
 
   const registerClick = () => {
+    
     history.push('/registrarse');
   };
 
@@ -15,46 +21,178 @@ const IniciarSesion: React.FC = () => {
     history.push('/password');
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let formValid = true;
+
+    //Nombre de usuario
+    if(!validUsernameI()){
+      formValid = false;
+    }
+
+    //Password de usuario
+    if(!validPasswordI()){
+      formValid = false;
+    }
+  }
+  //const expRegxStrPassword = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+  const expRegxStrPassword = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+  const expRegxStrUserName =/^[a-zA-Z][a-zA-Z0-9-_\. ]{3,15}$/;
+  //const expRegxStrRut = "^[0-9]+[-|‐]{1}[0-9kK]{1}$"
+
+  const [fieldUsernameI, setUsernameI] = useState({value:'', className: '', errorText: '_'});
+  const [fieldPasswordI, setPasswordI] = useState({value:'', className: '', errorText: '_'});
+
+  const validUsernameI = () => {
+    const usernameValueI = fieldUsernameI.value;
+
+    if(usernameValueI.length == 0){
+      setUsernameI(prevState => ({
+        ...prevState, 
+        className: "ion-invalid ion-touched",
+        errorText: "El nombre es obligatorio"
+      }));
+    return false;
+    }
+
+    if(usernameValueI.length < 3){
+      setUsernameI(prevState => ({
+        ...prevState, 
+        className: "ion-invalid ion-touched",
+        errorText: "El nombre debe tener al menos 3 caracteres"
+      }));
+      return false;
+    }
+
+    if(usernameValueI.length > 15){
+      setUsernameI(prevState => ({
+        ...prevState, 
+        className: "ion-invalid ion-touched",
+        errorText: "El nombre debe tener máximo 15 caracteres"
+      }));
+      return false;
+    }
+
+    if(!expRegxStrUserName.test(usernameValueI)){
+      setUsernameI(prevState => ({
+        ...prevState,// -> value: string; className: string; errorText: string;
+        className: "ion-invalid ion-touched",
+        errorText: "El nombre debe contener solo letras y/o números"
+      }));
+      return false;
+    }
+
+    return true;
+  }
+
+  const validPasswordI = () =>{
+    const passwordValueI = fieldPasswordI.value;
+    if (passwordValueI.length == 0){
+      setPasswordI(prevState => ({
+        ...prevState, 
+        className: "ion-invalid ion-touched",
+        errorText: "La contraseña es obligatoria"
+      }));
+      return false;
+    }
+
+    if (passwordValueI.length < 8){
+      setPasswordI(prevState => ({
+        ...prevState, 
+        className: "ion-invalid ion-touched",
+        errorText: "La contraseña debe tener al menos 8 caracteres"
+      }));
+      return false;
+    }
+
+    if (passwordValueI.length > 20){
+      setPasswordI(prevState => ({
+        ...prevState, 
+        className: "ion-invalid ion-touched",
+        errorText: "La contraseña debe tener máximo 20 caracteres"
+      }));
+      return false;
+    }
+
+    if(!expRegxStrPassword.test(passwordValueI)){
+      setPasswordI(prevState => ({
+        ...prevState,// -> value: string; className: string; errorText: string;
+        className: "ion-invalid ion-touched",
+        errorText: "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número o carácter especial"
+      }));
+      return false;
+    }
+    
+    return true;
+  }
+
+  //const expRegxStrUserName = /^[a-zA-Z][a-zA-Z0-9-_\. ]{1,15}$/;
+  //const expRegxStrPassword = /^(?=.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+  //const expRegxStrUserName = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$;
+  //const expRegxStrPassword = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+  //const hola = () => {
+  //  console.log("Hola mundo");
+  //};
+
   return (
-    <IonPage>
+    <IonPage id="IniciarSesion">
       <Header title="Iniciar Sesión"/>
       <IonContent fullscreen>
-        <div>
-            <form className="ion-padding">
-            
-            <div className="image-container">
-              <img src="../public/mascota.png" alt="Mascota Spark-E" />
-            </div>
-
-            <p className="press-start"><strong>Bienvenido</strong></p>
-
-            <IonItem>
-              <IonLabel position="floating">Ingrese su nombre de usuario</IonLabel>
-              <IonInput type="text" />
-            </IonItem>
-            
-            <IonText id="msgErrorUserName" color="danger" className="ion-padding-start">
-            <small></small>
-            </IonText>
-
-            <IonItem>
-              <IonLabel position="floating">Ingrese su contraseña</IonLabel>
-              <IonInput type="password" />
-            </IonItem>
-
-            <IonText id="msgErrorPassword" color="danger" className="ion-padding-start">
-            <small></small>
-            </IonText>
-            
-            <p><a onClick={passwordClick}><strong>¿Has olvidado tu contraseña?</strong></a></p>
-            
-            <IonButton color={"dark"} className="ion-margin-top" type="submit" expand="block">
-              Continuar
-            </IonButton>
-            
-            <p>¿Todavía no tienes una cuenta? <a className="ion-color-dark" onClick={registerClick}><strong>Registrate</strong></a></p>
-          </form>
+        <div className="image-container">
+          <img src="../public/mascota.png" alt="Mascota Spark-E" />
         </div>
+
+        <p className="press-start welcome"><strong>Bienvenido</strong></p>
+
+        <form className="ion-padding" onSubmit={handleSubmit}>
+          <IonInput 
+            id="fieldUserName" 
+            type="text"
+            label="Nombre de usuario" 
+            labelPlacement="floating" 
+            fill="outline" 
+            placeholder="Ingrese su nombre de usuario" 
+            value= {fieldUsernameI.value}
+            errorText= {fieldUsernameI.errorText}
+            className= {fieldUsernameI.className}
+            onIonChange={validUsernameI}
+            onIonInput={e => {
+              const newValue = e.detail.value || '';
+              const newClassName = "";
+              const newErrorText = "_";
+              setUsernameI({value: newValue, className: newClassName, errorText: newErrorText});
+            }}
+            //pattern= {expRegxStrUserName}
+          ></IonInput>
+
+          <IonInput 
+            id="fieldPassword" 
+            type="password"
+            label="Contraseña" 
+            labelPlacement="floating" 
+            fill="outline" 
+            placeholder="Ingrese su contraseña" 
+            value={fieldPasswordI.value}
+            errorText={fieldPasswordI.errorText}
+            className={fieldPasswordI.className}
+            onIonChange={validPasswordI}
+            onIonInput={e => {
+              const newValue = e.detail.value || '';
+              const newClassName = "";
+              const newErrorText = "_";
+              setPasswordI({value: newValue, className: newClassName, errorText: newErrorText});
+            }}
+            //<IonIcon slot="icon-only" name={eye} aria-hidden="true"></IonIcon>
+          >
+          </IonInput>
+          
+          <p><a onClick={passwordClick}><strong>¿Has olvidado tu contraseña?</strong></a></p>
+          
+          <Button title="Continuar" onClickFunction={()=>{}} typeButton="submit"/>
+          
+          <p>¿Todavía no tienes una cuenta? <a className="ion-color-dark" onClick={registerClick}><strong>Registrate</strong></a></p>
+        </form>
+
       </IonContent>
     </IonPage>
   );

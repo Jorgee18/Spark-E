@@ -24,9 +24,16 @@
 }
 
 .title{
+  font-size: 25px;
   text-align: center;
   left: 50%;
   position: absolute;
   transform: translateX(-50%);
   font-weight: bold;
+}
+
+@media screen and (max-width: 600px){
+  .title{
+    font-size: 15px;
+  }
 }

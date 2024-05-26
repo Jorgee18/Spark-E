@@ -1,24 +1,19 @@
-
-p {
-    text-align: center;
-}
-
-#msgErrorUserName{
-    display: none;
-}
-
-#msgErrorRut{
-    display: none;
-}
-
-#msgErrorEmail{
-    display: none;
-}
-
-#msgErrorPassword{
-    display: none;
-}
-
-#msgErrorConfirmPassword{
-    display: none;
+#Registrarse {
+    ion-item{
+        border: 1px solid #B3B3B3;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+    
+    form ion-input{
+        margin-bottom: 0px;
+    }
+    
+    .ion-invalid {
+        margin-bottom: 10px;
+    }
+    
+    p {
+        text-align: center;
+    }
 }
