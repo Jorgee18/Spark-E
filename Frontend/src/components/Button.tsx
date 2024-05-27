@@ -11,8 +11,8 @@ interface ContainerProps {
 const Button: React.FC<ContainerProps> = ({title, onClickFunction, typeButton}) => {
 
   const handleClick = (event: React.MouseEvent<HTMLIonButtonElement, MouseEvent>) => {
-    //event.preventDefault();
-    //event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
     onClickFunction(event);
   };
 

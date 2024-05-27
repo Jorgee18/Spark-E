@@ -1,0 +1,20 @@
+#Gas {
+    .info-gas{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .medidor{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .parrafo {
+        text-align: justify;
+    }
+
+    p {
+        margin-bottom: 0px;
+    }
+}

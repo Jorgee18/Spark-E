@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton,IonNavLink, IonRouterLink, IonItem, IonCheckbox, IonInput, IonLabel, IonText} from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import {useForm} from 'react-hook-form';
+//import {useForm} from 'react-hook-form';
 //npm install react-hook-form
 import Header from '../components/Header';
 import Button from '../components/Button'

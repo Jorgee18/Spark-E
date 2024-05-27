@@ -1,0 +1,66 @@
+#Temperatura {
+    .info-temperatura {
+        padding: 10%;
+        text-align: center;
+    }
+
+    .info-agrupada {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .boton {
+        margin-left: 6%;
+        margin-top: 6%;
+        font-weight: bold;
+        transform: scale(1.2);
+    }
+
+    .grados {
+        font-size: 8vw;
+        color: red;
+    } 
+
+    .texto-alerta {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 5vw;
+        border: 0.5vw solid red;
+        padding: 2%;
+        white-space: nowrap;
+    }
+
+    .termometro {
+        width: 50%;
+        height: auto;
+        margin-right: 5%;
+        margin-left: 5%;
+    }
+
+    .grafico {
+        width: 70%;
+        height: auto;
+    }
+
+    .titulo-grafico {
+        font-weight: bold;
+        font-size: 4vw;
+    }
+
+    .texto-superpuesto {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 6vw;
+        font-weight: bold;
+        text-align: center;
+        padding: 10%;
+    }
+
+    .grafico-texto {
+        position: relative  ;
+    }
+}

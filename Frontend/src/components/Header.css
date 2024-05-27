@@ -30,6 +30,11 @@
   position: absolute;
   transform: translateX(-50%);
   font-weight: bold;
+  height: 0%;
+}
+
+.barraS{
+  display: grid;
 }
 
 @media screen and (max-width: 600px){

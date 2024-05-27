@@ -34,6 +34,10 @@ const IniciarSesion: React.FC = () => {
     if(!validPasswordI()){
       formValid = false;
     }
+
+    if (formValid){
+      history.push('/menu');
+    }
   }
   //const expRegxStrPassword = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
   const expRegxStrPassword = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -183,8 +187,8 @@ const IniciarSesion: React.FC = () => {
           
           <p><a onClick={passwordClick}><strong>¿Has olvidado tu contraseña?</strong></a></p>
           
-          <Button title="Continuar" onClickFunction={()=>{}} typeButton="submit"/>
-          
+          <Button title="Continuar" onClickFunction={()=> {}} typeButton="submit"/>
+
           <p>¿Todavía no tienes una cuenta? <a className="ion-color-dark" onClick={registerClick}><strong>Registrate</strong></a></p>
         </form>
 
@@ -194,3 +198,5 @@ const IniciarSesion: React.FC = () => {
 };
 
 export default IniciarSesion;
+//<Button title="Continuar" onClick={menuClick} typeButton="submit"/>
+//<onButton color="dark" onClick={menuClick} className="button">Continuar</IonButton>

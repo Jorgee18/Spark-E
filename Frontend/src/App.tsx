@@ -5,6 +5,11 @@ import IniciarSesion from './pages/IniciarSesion';
 import TerminosDeServicio from './pages/TerminosDeServicio';
 import Registrarse from './pages/Registrarse';
 import Password from './pages/Password';
+import Menu from './pages/Menu';
+import Notificaciones from './pages/Notificaciones';
+import Temperatura from './pages/Temperatura';
+import Comportamiento from './pages/Comportamiento';
+import Gas from './pages/Gas';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -43,10 +48,6 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         
-        <Route exact path="/">
-          <Redirect to="/iniciar-sesion" />
-        </Route>
-
         <Route exact path="/iniciar-sesion">
           <IniciarSesion />
         </Route>
@@ -62,6 +63,31 @@ const App: React.FC = () => (
         <Route exact path="/password">
           <Password />
         </Route>
+
+        <Route exact path="/menu">
+          <Menu />
+        </Route>
+
+        <Route exact path="/notificaciones">
+          <Notificaciones />
+        </Route>
+
+        <Route exact path="/temperatura">
+          <Temperatura />
+        </Route>
+
+        <Route exact path="/gas">
+          <Gas />
+        </Route>
+
+        <Route exact path="/comportamiento">
+          <Comportamiento />
+        </Route>
+
+        <Route exact path="/">
+          <Redirect to="/iniciar-sesion" />
+        </Route>
+
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

@@ -10,11 +10,11 @@ const Header: React.FC<ContainerProps> = ({title}) => {
   return (
   <>
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar className='barraS'>
         <IonButtons slot="start">
         <IonBackButton />
         </IonButtons>
-        <IonTitle className="title press-start">{title}</IonTitle>
+        <IonTitle className="title press-start" >{title}</IonTitle>
       </IonToolbar>
     </IonHeader>
   </>
