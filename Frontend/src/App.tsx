@@ -10,6 +10,7 @@ import Notificaciones from './pages/Notificaciones';
 import Temperatura from './pages/Temperatura';
 import Comportamiento from './pages/Comportamiento';
 import Gas from './pages/Gas';
+import NotificacionEspecifica from './pages/NotificacionEspecifica'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -82,6 +83,10 @@ const App: React.FC = () => (
 
         <Route exact path="/comportamiento">
           <Comportamiento />
+        </Route>
+
+        <Route exact path="/notificacion-especifica">
+          <NotificacionEspecifica />
         </Route>
 
         <Route exact path="/">

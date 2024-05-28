@@ -1,5 +1,4 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton,IonNavLink, IonRouterLink, IonItem, IonCheckbox, IonInput, IonLabel, IonText ,IonSearchbar, IonList, IonNote, IonIcon} from '@ionic/react';
-import { useHistory } from 'react-router-dom';
 //import {useForm} from 'react-hook-form';
 //npm install react-hook-form
 import { chevronForward, listCircle } from 'ionicons/icons';
@@ -9,7 +8,7 @@ import NotificacionesState from '../components/NotificacionesState';
 import './Notificaciones.css';
 import '../theme/variables.css';
 
-const Notificaciones = () => {
+const Notificaciones = () => { 
   return (
     <IonPage id='Notificaciones'>
       <Header title="Notificaciones" />

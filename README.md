@@ -47,6 +47,37 @@ La aplicación contará con las siguientes funcionalidades:
 
 </div>
 
+### Estructura de Datos
+
+La aplicación almacenará usuarios, regiones, comunas y notificaciones.
+
+<div>
+    <ul>
+        <li><strong>Usuario:</strong> Los usuarios se componen de un nombre, correo electrónico, comuna de residencia, región de residencia y contraseña.</li>
+        <li><strong>Región:</strong> Las regiones contarán con un código de región y su nombre.</li>
+        <li><strong>Comuna:</strong> Las comunas, al igual que las regiones, tendrán un código comuna y su nombre.</li>
+        <li><strong>Notificación:</strong> Las notificaciones se componen de un identificador único, la fecha de creación, un título y la descripción de la misma.</li>
+    <ul>
+</div>
+
+<strong>Relaciones:</strong> Cada usuario estará asociado a un código de comuna y cada comuna a un código de región. Por otra parte las notificaciones serán globales, independientes del usuario que las visualice.
+
+<strong>Base de Datos:</strong> Para almacenar los datos de la aplicación se utilizará una base de datos relacional, para aprovechar las características y beneficios que suponen su uso. Debido a lo anterior y sumado a la familiaridad que el grupo tiene con el motor de base de datos, se ha optado por utilizar <strong>MySQL</strong>.
+
+
+### Patrones de Diseño
+
+Los patrones de diseño utilizados para la aplicación son los siguientes:
+
+<div>
+    <ul>
+        <li><strong>Back button (Navegación histórica):</strong> Es un “atrás” histórico dentro de la app en donde se encuentra el usuario. Se encuentra en el Header de todas las páginas, y se activa en cuanto el usuario navega a otra a través de las interacciones (Se implementa utilizando el useHistory hook de React).</li>
+        <li><strong>Inline Validation:</strong> Proporciona retroalimentación inmediata al usuario mientras completa formularios, indicando errores y validaciones en tiempo real. Se encuentra en los formularios de inicio sesión, registro y cambio de contraseña, y se implementa a través de validadores personalizados que se actualizan al momento de presionar continuar (realizar un submit).</li>
+        <li><strong>Toggle Switch Pattern (Patrón de Alternancia):</strong> El patrón de alternancia utiliza un interruptor (toggle switch) para permitir a los usuarios seleccionar entre dos opciones distintas. Se encuentra en la página de "Temperatura" para permitir al usuario cambiar entre una lectura de temperatura de celsius a fahrenheit.</li>
+        <li><strong>Notification List:</strong> Una lista que muestra notificaciones o mensajes ordenados cronológicamente, permitiendo a los usuarios ver, interactuar y gestionar sus notificaciones de manera eficiente. Se encuentra en la página de "Notificaciones" como una lista de alertas que pueden ser marcadas como leídas o no.</li>
+    <ul>
+</div>
+
 ## Prototipo
 
 <div align="center">

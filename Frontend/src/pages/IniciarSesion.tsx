@@ -198,5 +198,3 @@ const IniciarSesion: React.FC = () => {
 };
 
 export default IniciarSesion;
-//<Button title="Continuar" onClick={menuClick} typeButton="submit"/>
-//<onButton color="dark" onClick={menuClick} className="button">Continuar</IonButton>
