@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const regionesComunasController = require("../controllers/regionesComunasController");
 
-router.get('/regiones', regionesComunasController.getListRegiones);
+router.get('/regiones',regionesComunasController.getListRegiones);
 
 router.get('/regiones/:cod_region', regionesComunasController.getRegionByCod);
 
