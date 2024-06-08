@@ -1,16 +1,11 @@
+const config = require('./config');
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const mysql = require("mysql");
+const bodyParser = require('body-parser');
 
 //Conexión con la base de datos
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    port: 3306,
-    database: 'spark-e'
-});
+const connection = mysql.createConnection(config.mysql);
 connection.connect(function (err: any) {
     if (err) {
         console.error('Error conectando a la DB ' + err.stack);
@@ -23,21 +18,17 @@ connection.connect(function (err: any) {
 //Analizador de solicitudes HTTP
 var jsonParser = bodyParser.json();
 
-//Configuración del servidor
-const configuracion = {
-    port: 3360,
-    hostname: "127.0.0.1"
-}
-
 //Importación de las rutas a utilizar
-const usuariosRoutes = require('./routes/usuariosRoutes')(express);
-const regionesComunasRoutes = require('./routes/regionesComunasRoutes')(express);
+const usuariosRoutes = require('./routes/usuariosRoutes');
+const regionesComunasRoutes = require('./routes/regionesComunasRoutes');
+const notificacionesRoutes = require('./routes/notificacionesRoutes');
 app.use('/usuarios', usuariosRoutes);
+app.use('/notificaciones', notificacionesRoutes);
 app.use('/api.regiones-y-comunas-chile', regionesComunasRoutes);
 
 
-app.listen(configuracion, () => {
-    console.log(`🚀 Empezando servidor ${configuracion.hostname} en el puerto ${configuracion.port}`)
+app.listen(config.app, () => {
+    console.log(`🚀 Empezando servidor ${config.app.hostname} en el puerto ${config.app.port}`)
 });
 
 module.exports = {
