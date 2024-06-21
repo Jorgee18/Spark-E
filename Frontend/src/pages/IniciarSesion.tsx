@@ -36,7 +36,41 @@ const IniciarSesion: React.FC = () => {
     }
 
     if (formValid){
-      history.push('/menu');
+      sendDataToBackend();
+    }
+  }
+  
+  const sendDataToBackend = async () =>{
+    const data = {
+      username: fieldUsernameI.value,
+      password: fieldPasswordI.value
+    };
+
+    try {
+      const response = await fetch('https://q3tdh7wk-3360.brs.devtunnels.ms/usuarios/inicio-sesion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        // Handle successful response
+        const responseData = await response.json();
+        console.log('Sesion successful:', responseData);
+        // Guarda el token en el almacenamiento local
+        localStorage.setItem('token', responseData.token);
+        // Redirect or show success message
+        history.push('/menu');
+      } else {
+        // Handle error response
+        console.error('Sesion failed:', response.statusText);
+        // Show error message to the user
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Show error message to the user
     }
   }
   //const expRegxStrPassword = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";

@@ -28,10 +28,10 @@ const Registrarse: React.FC = () => {
 
   const [isConfirmPasswordDisabled, setConfirmPasswordDisabled] = useState(true);
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let formValid = true;
-
+    
     //Nombre de usuario
     if(!validUsername()){
       formValid = false;
@@ -66,7 +66,50 @@ const Registrarse: React.FC = () => {
     if(!validConfirmPassword()){
       formValid = false;
     }
+    
+    if (formValid){
+      sendDataToBackend();
+    }
   }
+
+  const sendDataToBackend = async () => {
+    const data = {
+      username: fieldUsername.value,
+      rut: fieldRut.value,
+      email: fieldEmail.value,
+      password: fieldPassword.value,
+      confirmPassword: fieldConfirmPassword.value,
+      region: fieldRegion.value,
+      comuna: fieldComuna.value
+    };
+
+    try {
+      const response = await fetch('https://q3tdh7wk-3360.brs.devtunnels.ms/usuarios/registrar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        // Handle successful response
+        const responseData = await response.json();
+        console.log('Registration successful:', responseData);
+        // Redirect or show success message
+        history.goBack();
+      } else {
+        // Handle error response
+        const responseData = await response.json();
+        console.error('Registration failed:', response.statusText);
+        console.log('Registration failed:', responseData);
+        // Show error message to the user
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Show error message to the user
+    }
+  };
 
   const validUsername = () => {
     const usernameValue = fieldUsername.value;
@@ -76,7 +119,7 @@ const Registrarse: React.FC = () => {
         ...prevState, 
         className: "ion-invalid ion-touched",
         errorText: "El nombre es obligatorio"
-      }));
+      }));;
       return false;
     }
     
@@ -389,6 +432,7 @@ const Registrarse: React.FC = () => {
                   const newClassName = ""
                   const newErrorText = "_";
                   setPassword({ value: newValue, className: newClassName, errorText: newErrorText });
+                  setConfirmPasswordDisabled(newValue.length == 0);
                 }}>
             </IonInput>
 
