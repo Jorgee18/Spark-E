@@ -5,7 +5,6 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mysql = require('mysql');
-const bodyParser = require('body-parser');
 const auth = require('./auth');
 //Configurar CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
@@ -18,8 +17,6 @@ connection.connect(function (err) {
     }
     console.log('💾 Conexión con la DB establecida ' + connection.threadId);
 });
-//Analizador de solicitudes HTTP
-var jsonParser = bodyParser.json();
 //Importación de las rutas a utilizar
 const usuariosRoutes = require('./routes/usuariosRoutes');
 const regionesComunasRoutes = require('./routes/regionesComunasRoutes');
@@ -31,6 +28,5 @@ app.listen(config.app, () => {
     console.log(`🚀 Empezando servidor ${config.app.hostname} en el puerto ${config.app.port}`);
 });
 module.exports = {
-    connection,
-    bodyParser
+    connection
 };

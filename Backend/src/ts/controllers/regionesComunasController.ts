@@ -3,7 +3,7 @@ const importConnection = () => require("../app").connection;
 const getListRegiones = (req:any, res:any) => {
     try {
         const connection = importConnection();
-        connection.query("SELECT * FROM regiones",function(error:any,results:any,fields:any){
+        connection.query("SELECT * FROM regiones", function(error:any,results:any,fields:any){
             res.send(JSON.stringify(results));
         });
     } catch (error: any) {

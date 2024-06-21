@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 const express = require("express");
-function generateToken() {
-    const token = jwt.sign({ foo: 'bar' }, config.jwtSecret, { expiresIn: '3h' });
+function generateToken(user) {
+    const token = jwt.sign(user, config.jwtSecret, { expiresIn: '3h' });
     return token;
 }
 const verifyToken = express.Router();
 verifyToken.use((req, res, next) => {
     const token = req.headers["access-token"];
     if (!token) {
-        return res.status(403).send('Token no proporcionado');
+        return res.status(403).send('El Token no ha sido proporcionado');
     }
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
         if (err) {
