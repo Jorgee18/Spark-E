@@ -47,7 +47,7 @@ const IniciarSesion: React.FC = () => {
     };
 
     try {
-      const response = await fetch('https://q3tdh7wk-3360.brs.devtunnels.ms/usuarios/inicio-sesion', {
+      const response = await fetch('http://127.0.0.1:3360/usuarios/inicio-sesion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

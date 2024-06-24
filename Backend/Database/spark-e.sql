@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-05-2024 a las 18:24:30
+-- Tiempo de generación: 22-06-2024 a las 02:09:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -388,6 +388,19 @@ INSERT INTO `comunas` (`cod_comuna`, `cod_region`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notificacion`
+--
+
+CREATE TABLE `notificacion` (
+  `id_notificación` int(11) NOT NULL,
+  `titulo` text NOT NULL,
+  `fecha` datetime NOT NULL,
+  `descripción` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `regiones`
 --
 
@@ -429,8 +442,18 @@ CREATE TABLE `usuarios` (
   `rut` varchar(15) NOT NULL COMMENT 'Rut del usuario',
   `correo` varchar(70) NOT NULL COMMENT 'Correo del usuario',
   `cod_comuna` varchar(5) NOT NULL COMMENT 'Código de la comuna en la que habita',
-  `clave` varchar(70) NOT NULL COMMENT 'Contraseña encriptada del usuario'
+  `clave` char(100) NOT NULL COMMENT 'Contraseña encriptada del usuario'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre`, `rut`, `correo`, `cod_comuna`, `clave`) VALUES
+(1, 'testUser', '11111111-1', 'test@mail.cl', '01101', '$2b$10$lCIUr6wAgl4i6nJa4YSRDOQQ8cEQNyHCdpFgaIrwNds1WMA99fywW'),
+(5, 'aaaaa1', '11222333-4', 'aaa@mail.cl', '01101', '$2b$10$6ab1cT2nzjEPO6n95CBDW.ptqRtr87CuV3AUwrb3WSefTpZO/0rg.'),
+(8, 'seba', '55555555-5', 'seba@gmail.com', '01101', '$2b$10$ue1SR0M69NjlaosLxFQj1u76CUJRn0nHZWGd6CgQp9X40h/an74SC'),
+(9, 'Joseph', '21067120-k', 'a@a.com', '05102', '$2b$10$2PX0ix2/obOnrfzkru57Y.4egf2X4XlBlyLbDQ.EVU2aYjtUX2mhe');
 
 --
 -- Índices para tablas volcadas
@@ -444,6 +467,12 @@ ALTER TABLE `comunas`
   ADD KEY `cod_region` (`cod_region`);
 
 --
+-- Indices de la tabla `notificacion`
+--
+ALTER TABLE `notificacion`
+  ADD PRIMARY KEY (`id_notificación`);
+
+--
 -- Indices de la tabla `regiones`
 --
 ALTER TABLE `regiones`
@@ -455,6 +484,8 @@ ALTER TABLE `regiones`
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `rut` (`rut`),
+  ADD UNIQUE KEY `correo` (`correo`),
+  ADD UNIQUE KEY `nombre` (`nombre`),
   ADD KEY `cod_comuna` (`cod_comuna`);
 
 --
@@ -462,10 +493,16 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `notificacion`
+--
+ALTER TABLE `notificacion`
+  MODIFY `id_notificación` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario';
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario', AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas

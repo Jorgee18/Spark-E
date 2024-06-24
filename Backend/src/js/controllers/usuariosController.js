@@ -66,8 +66,8 @@ const getUsuariosByNombre = (req, res) => {
 const registrar = (req, res) => {
     const connection = importConnection();
     // Obtén los datos del cuerpo de la solicitud
-    const { username, rut, email, password, confirmPassword, region, comuna } = req.body;
-    console.log('Datos recibidos:', { username, rut, email, password, region, comuna });
+    const { username, rut, email, password, confirmPassword, cod_region, cod_comuna } = req.body;
+    console.log('Datos recibidos:', { username, rut, email, password, cod_region, cod_comuna });
     let usuarioValido = true;
     const sql_validUser = 'SELECT * FROM usuarios WHERE nombre = ? OR rut = ? OR correo = ?';
     const values_validUser = [username, rut, email];
@@ -80,6 +80,19 @@ const registrar = (req, res) => {
             // Si el NOMBRE, RUT o el CORREO ya existe, enviar un mensaje de error
             usuarioValido = false;
             return res.status(400).json({ message: 'El usuario no se agregó porque ya existe un usuario con ese NOMBRE, RUT o CORREO.' });
+        }
+    });
+    const sql_validRegionComuna = 'SELECT * FROM comunas WHERE cod_comuna = ? AND cod_region = ?';
+    const values_validRegionComuna = [cod_comuna, cod_region];
+    connection.query(sql_validRegionComuna, values_validRegionComuna, (err, results) => {
+        if (err) {
+            console.error('Error ejecutando la consulta:', err);
+            return res.status(500).send('Error en el servidor');
+        }
+        if (results.length == 0) {
+            // Si la COMUNA no coincide con la REGION, enviar un mensaje de error
+            usuarioValido = false;
+            return res.status(400).json({ message: 'El usuario no se agregó porque la REGION o COMUNA no coinciden' });
         }
     });
     if (typeof username !== 'string' || !expRegxStrUserName.test(username) || username.length < 3 || username.length > 15) {
@@ -116,7 +129,7 @@ const registrar = (req, res) => {
                     else {
                         // Consulta SQL para insertar los datos en la base de datos
                         const sql = 'INSERT INTO usuarios (nombre, rut, correo, clave, cod_comuna) VALUES (?, ?, ?, ?, ?)';
-                        const values = [username, rut, email, hash, "01101"];
+                        const values = [username, rut, email, hash, cod_comuna];
                         // Ejecuta la consulta
                         connection.query(sql, values, (err, results) => {
                             if (err) {
