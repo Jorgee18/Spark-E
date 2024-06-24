@@ -60,7 +60,9 @@ const IniciarSesion: React.FC = () => {
         const responseData = await response.json();
         console.log('Sesion successful:', responseData);
         // Guarda el token en el almacenamiento local
-        localStorage.setItem('token', responseData.token);
+        sessionStorage.setItem('token', responseData.token);
+        // Guarda el id en el almacenamiento local
+        sessionStorage.setItem('identificador', responseData.id);
         // Redirect or show success message
         history.push('/menu');
       } else {

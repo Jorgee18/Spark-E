@@ -1,0 +1,8 @@
+fetch("", {
+method: "GET",
+headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+    Identifier: sessionStorage.getItem("identificador") 
+},
+});

@@ -9,40 +9,6 @@ const expRegxStrUserName = /^[a-zA-Z][a-zA-Z0-9-_\. ]{3,15}$/;
 const expRegxStrPassword = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
 const expRegxStrRut = /^[0-9]+[-|‐]{1}[0-9kK]{1}$/;
 //MODO DE USO 
-const plaintextPassword = 'password123'; // La contraseña proporcionada por el usuario
-// Genera un salt (una cadena aleatoria) para hashear la contraseña
-bcrypt.genSalt(saltRounds, (err, salt) => {
-    if (err) {
-        // Manejar el error
-    }
-    else {
-        // Hashea la contraseña con el salt
-        bcrypt.hash(plaintextPassword, salt, (err, hash) => {
-            if (err) {
-                // Manejar el error
-            }
-            else {
-                // Almacena el hash en la base de datos en lugar de la contraseña en texto plano
-                // hash contiene la contraseña hasheada que puedes almacenar en tu base de datos
-                console.log('Contraseña hasheada:', hash);
-            }
-        });
-    }
-});
-/*
-// Compara la contraseña proporcionada con la versión hasheada almacenada en la base de datos
-bcrypt.compare(plainPasswordFromUser, hashedPasswordFromDatabase, (err:any, result:any) => {
-    if (err) {
-        // Manejar el error
-    } else if (result) {
-        // Las contraseñas coinciden, el usuario puede iniciar sesión
-        console.log('Contraseñas coinciden');
-    } else {
-        // Las contraseñas no coinciden, el usuario no puede iniciar sesión
-        console.log('Contraseñas no coinciden');
-    }
-});
-*/
 const getUsuarios = (req, res) => {
     try {
         const connection = importConnection();
@@ -228,7 +194,7 @@ const login = (req, res) => {
                         'rut': results[0].rut,
                         'correo': results[0].correo
                     });
-                    return res.status(200).json({ message: 'Ingresó correctamente', token: token });
+                    return res.status(200).json({ message: 'Ingresó correctamente', token: token, identificador: results[0].id });
                 }
                 else {
                     return res.status(400).json({ message: 'Las contraseñas no coinciden' });

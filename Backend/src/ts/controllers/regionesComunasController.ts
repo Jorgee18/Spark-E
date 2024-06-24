@@ -42,7 +42,7 @@ const getComunaByCod = (req:any, res:any) => {
     try {
         const connection = importConnection();
         let cod_comuna = req.params.cod_comuna;
-        connection.query("SELECT * FROM comunas WHERE cod_comuna = ?", [cod_comuna],function(error:any,results:any,fields:any){
+        connection.query("SELECT * FROM comunas WHERE cod_comuna = ?", [cod_comuna], function(error:any,results:any,fields:any){
             res.send(JSON.stringify(results));
         });
     } catch (error: any) {
