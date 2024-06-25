@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 const express = require("express");
-const importConnection = () => require("../app").connection;
+const importConnection = () => require("./app").connection;
 function generateToken(user) {
     const token = jwt.sign(user, config.jwtSecret, { expiresIn: '3h' });
     return token;
 }
 const verifyToken = express.Router();
 verifyToken.use((req, res, next) => {
-    const token = req.headers["access-token"];
+    const token = req.headers["authorization"];
     if (!token) {
         return res.status(403).send('El Token no ha sido proporcionado');
     }
@@ -27,27 +27,23 @@ verifyToken.use((req, res, next) => {
 });
 const verifyRole = express.Router();
 verifyRole.use((req, res, next) => {
-    const id = req.headers['Identifier'];
+    const id = req.headers["identifier"];
+    const connection = importConnection();
     try {
-        const connection = importConnection();
-        connection.query("SELECT * FROM usuario WHERE id = ?", [id], function (error, results, fields) {
-            res.send(JSON.stringify(results));
-            if (results.length != 0) {
-                if (results[0].role !== 'admin') {
-                    return res.sendStatus(403); // Forbidden
-                }
-                else {
-                    next();
-                }
+        connection.query("SELECT * FROM usuarios WHERE id = ?", [id], function (error, results, fields) {
+            if (!results || results.length == 0) {
+                return res.status(400).json({ message: 'El usuario con ese id no existe.' });
+            }
+            if (results[0].role !== 'admin') {
+                return res.sendStatus(403); // Forbidden
             }
             else {
-                return res.status(400).json({ message: 'El usuario con ese id no existe.' });
+                next();
             }
         });
     }
-    catch (error) {
-        res.status(500);
-        res.send(error.message);
+    catch (err) {
+        res.status(500).send({ message: 'Error al verificar el rol del usuario' });
     }
 });
 module.exports = {

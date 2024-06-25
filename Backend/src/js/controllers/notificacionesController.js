@@ -5,7 +5,7 @@ const importBodyParser = () => require("../app").bodyParser;
 const getNotificaciones = (req, res) => {
     try {
         const connection = importConnection();
-        connection.query("SELECT * FROM notificaciones", function (error, results, fields) {
+        connection.query("SELECT * FROM notificacion", function (error, results, fields) {
             res.send(JSON.stringify(results));
         });
     }
@@ -18,7 +18,7 @@ const getNotificacionesById = (req, res) => {
     try {
         const connection = importConnection();
         let id_notificacion = req.params.id_notificacion;
-        connection.query("SELECT * FROM notificaciones WHERE id_notificación = ?", [id_notificacion], function (error, results, fields) {
+        connection.query("SELECT * FROM notificacion WHERE id_notificación = ?", [id_notificacion], function (error, results, fields) {
             res.send(JSON.stringify(results));
         });
     }
@@ -26,6 +26,9 @@ const getNotificacionesById = (req, res) => {
         res.status(500);
         res.send(error.message);
     }
+    /*
+    Actualizar el estado a "visto"
+    */
 };
 const crearNotificacion = (req, res) => {
     const connection = importConnection();
@@ -34,7 +37,7 @@ const crearNotificacion = (req, res) => {
     console.log('Datos recibidos:', { titulo, descripcion });
     const fecha = new Date();
     const estado = false;
-    const sql = 'INSERT INTO notificaciones (titulo, fecha, descripcion, estado) VALUES (?, ?, ?, ?)';
+    const sql = 'INSERT INTO notificacion (titulo, fecha, descripción, estado) VALUES (?, ?, ?, ?)';
     const values = [titulo, fecha, descripcion, estado];
     // Ejecuta la consulta
     connection.query(sql, values, (err, results) => {
@@ -50,7 +53,7 @@ const eliminarNotificacion = (req, res) => {
     const connection = importConnection();
     let eliminarValido = true;
     let id_notificacion = req.params.id_notificacion;
-    connection.query("SELECT * FROM notificaciones WHERE id_notificación = ?", [id_notificacion], function (err, results, fields) {
+    connection.query("SELECT * FROM notificacion WHERE id_notificación = ?", [id_notificacion], function (err, results, fields) {
         if (err) {
             console.error('Error ejecutando la consulta:', err);
             return res.status(500).send('Error en el servidor');
@@ -62,7 +65,7 @@ const eliminarNotificacion = (req, res) => {
         }
     });
     if (eliminarValido) {
-        const sql = 'DELETE FROM notificaciones WHERE id_notificación = ? (id_notificación) VALUES (?)';
+        const sql = 'DELETE FROM notificacion WHERE id_notificación = ?';
         const values = [id_notificacion];
         try {
             connection.query(sql, values, (err, results) => {
