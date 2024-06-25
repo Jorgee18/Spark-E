@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-06-2024 a las 02:09:15
+-- Tiempo de generación: 25-06-2024 a las 23:53:39
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -395,8 +395,30 @@ CREATE TABLE `notificacion` (
   `id_notificación` int(11) NOT NULL,
   `titulo` text NOT NULL,
   `fecha` datetime NOT NULL,
-  `descripción` text NOT NULL
+  `descripción` text NOT NULL,
+  `estado` tinyint(1) NOT NULL COMMENT 'Estado de la notificación, vista o no vista (true o false)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `notificacion`
+--
+
+INSERT INTO `notificacion` (`id_notificación`, `titulo`, `fecha`, `descripción`, `estado`) VALUES
+(3, 'Joseph', '2024-06-24 19:54:24', '12345678Aa', 0),
+(4, 'Joseph', '2024-06-24 19:54:24', '12345678Aa', 0),
+(5, 'Joseph', '2024-06-24 19:54:25', '12345678Aa', 0),
+(6, 'Joseph', '2024-06-24 19:54:25', '12345678Aa', 0),
+(7, 'Joseph', '2024-06-24 19:54:25', '12345678Aa', 0),
+(8, 'Joseph', '2024-06-24 19:54:25', '12345678Aa', 0),
+(9, 'Joseph', '2024-06-24 19:54:25', '12345678Aa', 0),
+(10, 'Joseph', '2024-06-24 19:54:26', '12345678Aa', 0),
+(11, 'Joseph', '2024-06-24 19:54:26', '12345678Aa', 0),
+(12, 'Joseph', '2024-06-24 19:54:26', '12345678Aa', 0),
+(13, 'Joseph', '2024-06-24 19:54:26', '12345678Aa', 0),
+(14, 'Joseph', '2024-06-24 19:54:26', '12345678Aa', 0),
+(15, 'Joseph', '2024-06-24 19:54:26', '12345678Aa', 0),
+(16, 'Joseph', '2024-06-24 19:54:27', '12345678Aa', 0),
+(17, 'Joseph', '2024-06-24 19:54:27', '12345678Aa', 0);
 
 -- --------------------------------------------------------
 
@@ -442,18 +464,20 @@ CREATE TABLE `usuarios` (
   `rut` varchar(15) NOT NULL COMMENT 'Rut del usuario',
   `correo` varchar(70) NOT NULL COMMENT 'Correo del usuario',
   `cod_comuna` varchar(5) NOT NULL COMMENT 'Código de la comuna en la que habita',
-  `clave` char(100) NOT NULL COMMENT 'Contraseña encriptada del usuario'
+  `clave` char(100) NOT NULL COMMENT 'Contraseña encriptada del usuario',
+  `role` text NOT NULL DEFAULT '\'user\'' COMMENT 'El rol del usuario (user o admin).'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `rut`, `correo`, `cod_comuna`, `clave`) VALUES
-(1, 'testUser', '11111111-1', 'test@mail.cl', '01101', '$2b$10$lCIUr6wAgl4i6nJa4YSRDOQQ8cEQNyHCdpFgaIrwNds1WMA99fywW'),
-(5, 'aaaaa1', '11222333-4', 'aaa@mail.cl', '01101', '$2b$10$6ab1cT2nzjEPO6n95CBDW.ptqRtr87CuV3AUwrb3WSefTpZO/0rg.'),
-(8, 'seba', '55555555-5', 'seba@gmail.com', '01101', '$2b$10$ue1SR0M69NjlaosLxFQj1u76CUJRn0nHZWGd6CgQp9X40h/an74SC'),
-(9, 'Joseph', '21067120-k', 'a@a.com', '05102', '$2b$10$2PX0ix2/obOnrfzkru57Y.4egf2X4XlBlyLbDQ.EVU2aYjtUX2mhe');
+INSERT INTO `usuarios` (`id`, `nombre`, `rut`, `correo`, `cod_comuna`, `clave`, `role`) VALUES
+(1, 'testUser', '11111111-1', 'test@mail.cl', '01101', '$2b$10$lCIUr6wAgl4i6nJa4YSRDOQQ8cEQNyHCdpFgaIrwNds1WMA99fywW', 'user'),
+(5, 'aaaaa1', '11222333-4', 'aaa@mail.cl', '01101', '$2b$10$6ab1cT2nzjEPO6n95CBDW.ptqRtr87CuV3AUwrb3WSefTpZO/0rg.', 'user'),
+(8, 'seba', '55555555-5', 'seba@gmail.com', '01101', '$2b$10$ue1SR0M69NjlaosLxFQj1u76CUJRn0nHZWGd6CgQp9X40h/an74SC', 'user'),
+(9, 'Joseph', '21067120-k', 'a@a.com', '05102', '$2b$10$2PX0ix2/obOnrfzkru57Y.4egf2X4XlBlyLbDQ.EVU2aYjtUX2mhe', 'admin'),
+(10, 'Tichi', '20846427-2', 'b@b.com', '05102', '$2b$10$YmexBtMqm1EYZfTi42VnmOZtSViuqiIig0f9zRDgRXTXblZoih5e6', 'user');
 
 --
 -- Índices para tablas volcadas
@@ -496,13 +520,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `notificacion`
 --
 ALTER TABLE `notificacion`
-  MODIFY `id_notificación` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_notificación` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario', AUTO_INCREMENT=10;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario', AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
