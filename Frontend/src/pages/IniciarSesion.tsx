@@ -1,6 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton,IonNavLink, IonRouterLink, IonItem, IonCheckbox, IonInput, IonLabel, IonText, IonIcon} from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Button from '../components/Button'
 import './IniciarSesion.css';
@@ -11,6 +12,11 @@ import '../theme/variables.css';
 const IniciarSesion: React.FC = () => {
 
   const history = useHistory();
+  const { login, logout } = useAuth();
+
+  useEffect( () => {
+    logout();
+  }, []);
 
   const registerClick = () => {
     
@@ -36,7 +42,46 @@ const IniciarSesion: React.FC = () => {
     }
 
     if (formValid){
-      history.push('/menu');
+      sendDataToBackend();
+    }
+  }
+  
+  const sendDataToBackend = async () =>{
+    const data = {
+      username: fieldUsernameI.value,
+      password: fieldPasswordI.value
+    };
+
+    try {
+      const response = await fetch('http://127.0.0.1:3360/usuarios/inicio-sesion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        // Handle successful response
+        const responseData = await response.json();
+        localStorage.setItem('token', responseData.token);
+        login(); 
+        console.log('Sesion successful:', responseData);
+        // Guarda el token en el almacenamiento local
+        sessionStorage.setItem('token', responseData.token);
+        // Guarda el id en el almacenamiento local
+        sessionStorage.setItem('identificador', responseData.id);
+        // Redirect or show success message
+        history.push('/menu');
+        location.reload();
+      } else {
+        // Handle error response
+        console.error('Sesion failed:', response.statusText);
+        // Show error message to the user
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Show error message to the user
     }
   }
   //const expRegxStrPassword = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";

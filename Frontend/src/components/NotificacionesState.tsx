@@ -4,25 +4,28 @@ import '../theme/variables.css';
 import { chevronForward, listCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 
-
 interface ContainerProps {
+  id: string;
   state: string;
   info: string;
   fecha: string;
   visto: boolean;
 }
 
-const NotificacionesState: React.FC<ContainerProps> = ({state, info, fecha, visto}) => {
+const NotificacionesState: React.FC<ContainerProps> = ({id, state, info, fecha, visto}) => {
   const history = useHistory();
 
-    const handleNavigation = (path: any) => {
-       history.push(path);
-    };
+  const handleNavigation = (path: any) => {
+    sessionStorage.setItem("id-notificacion", id )
+    
+    history.push(path);
+  };
+  
   return (
   <>
     <IonItem button={true} detail={false} onClick={() => handleNavigation('/notificacion-especifica')}>
       <div className="unread-indicator-wrapper" slot="start">
-        {visto ? <div className="unread-indicator"></div> : null}
+        {!visto ? <div className="unread-indicator"></div> : null}
       </div>
       <IonLabel>
         <strong>{state}</strong>

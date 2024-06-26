@@ -21,17 +21,17 @@ const Registrarse: React.FC = () => {
   const [fieldEmail, setEmail] = useState({value:'', className: '', errorText: '_'}); //Email
   const [fieldPassword, setPassword] = useState({value:'', className: '', errorText: '_'}); //Password
   const [fieldConfirmPassword, setConfirmPassword] = useState({value:'', className: '', errorText: '_'}); //Confirmar Password
-  const [fieldRegion, setRegion] = useState({value:'', className:'', errorText: ''}); //Regiones
-  const [fieldComuna, setComuna] = useState({value:'', className:'', errorText: ''}); //Comunas
-  const [listaRegiones, setRegiones] = useState([{region: '', comunas: []}]); //Regiones opciones
-  const [regSel, setRegSel] = useState([]); //Comunas opciones
+  const [fieldRegion, setRegion] = useState({key: '', value:'', className:'', errorText: ''}); //Regiones
+  const [fieldComuna, setComuna] = useState({key: '', value:'', className:'', errorText: ''}); //Comunas
+  const [listaRegiones, setRegiones] = useState([{cod_region: '', nombre: ''}]); //Regiones opciones
+  const [regSel, setRegSel] = useState([{cod_comuna:'', cod_region:'', nombre:''}]); //Comunas opciones
 
   const [isConfirmPasswordDisabled, setConfirmPasswordDisabled] = useState(true);
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let formValid = true;
-
+    
     //Nombre de usuario
     if(!validUsername()){
       formValid = false;
@@ -66,7 +66,50 @@ const Registrarse: React.FC = () => {
     if(!validConfirmPassword()){
       formValid = false;
     }
+    
+    if (formValid){
+      sendDataToBackend();
+    }
   }
+
+  const sendDataToBackend = async () => {
+    const data = {
+      username: fieldUsername.value,
+      rut: fieldRut.value,
+      email: fieldEmail.value,
+      password: fieldPassword.value,
+      confirmPassword: fieldConfirmPassword.value,
+      cod_region: fieldRegion.key,
+      cod_comuna: fieldComuna.key
+    };
+
+    try {
+      const response = await fetch('http://127.0.0.1:3360/usuarios/registrar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        // Handle successful response
+        const responseData = await response.json();
+        console.log('Registration successful:', responseData);
+        // Redirect or show success message
+        history.goBack();
+      } else {
+        // Handle error response
+        const responseData = await response.json();
+        console.error('Registration failed:', response.statusText);
+        console.log('Registration failed:', responseData);
+        // Show error message to the user
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Show error message to the user
+    }
+  };
 
   const validUsername = () => {
     const usernameValue = fieldUsername.value;
@@ -76,7 +119,7 @@ const Registrarse: React.FC = () => {
         ...prevState, 
         className: "ion-invalid ion-touched",
         errorText: "El nombre es obligatorio"
-      }));
+      }));;
       return false;
     }
     
@@ -236,33 +279,43 @@ const Registrarse: React.FC = () => {
     }
     return true;
   }
-  
+
   const handleRegionChange = (e: CustomEvent) => {
-    const nombreRegion = e.detail.value;
-    const newClassName = ""
+    const selectedRegion = listaRegiones.find(region => region.nombre === e.detail.value);
+    const newClassName = "";
     const newErrorText = "";
-    setRegion({ value: nombreRegion, className: newClassName, errorText: newErrorText });
-    const selectedRegion = listaRegiones?.find(region => region.region === nombreRegion);
-    if (selectedRegion) {
-      setRegSel(selectedRegion.comunas); 
-    }
+    setRegion({ key: selectedRegion?.cod_region ?? "", value: selectedRegion?.nombre ?? "", className: newClassName, errorText: newErrorText });
+    fetchComunasForCodRegion(selectedRegion?.cod_region ?? "");
     setComuna(prevState => ({
       ...prevState, 
       value: "",
-    })); 
+    }));
     validComuna();
-  }
+  };
+
+  const fetchComunasForCodRegion = async (codRegion: string) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:3360/api.regiones-y-comunas-chile/regiones/${codRegion}/comunas`);
+      const data = await response.json();
+      setRegSel(data); 
+    } catch (error) {
+      console.error('Error al obtener comunas:', error);
+    }
+  };
   
+
   useEffect(() => {
-    // Realiza la solicitud fetch para obtener los datos del archivo JSON
-    fetch('../public/comunas-regiones.json')
-      .then(response => response.json())
-      .then(data => {
+    const fetchRegiones = async () => {
+      try {
+        const response = await fetch('http://localhost:3360/api.regiones-y-comunas-chile/regiones');
+        const data = await response.json();
         setRegiones(data);
-      })
-      .catch(error => {
-        console.error('Error al leer el archivo JSON:', error);
-      });
+      } catch (error) {
+        console.error('Error al obtener regiones:', error);
+      }
+    };
+
+    fetchRegiones();
   }, []);
   
   return (
@@ -338,9 +391,9 @@ const Registrarse: React.FC = () => {
                 onIonChange={handleRegionChange} 
                 interface="popover">
                     <IonSelectOption disabled value="">Selecciona una región</IonSelectOption>
-                    {listaRegiones.map((region, index ) => (
-                        <IonSelectOption key={index} value={region.region}>
-                          {region.region}
+                    {listaRegiones.map((region) => (
+                        <IonSelectOption key={region.cod_region} value={region.nombre}>
+                          {region.nombre}
                         </IonSelectOption>  
                     ))}
                 </IonSelect>
@@ -355,15 +408,15 @@ const Registrarse: React.FC = () => {
                 value={fieldComuna.value}
                 interface="popover"
                 onIonChange ={e => {
-                  const newValue = e.detail.value || '';
+                  const comuna = regSel.find(comuna => comuna.nombre === e.detail.value)
                   const newClassName = "";
                   const newErrorText = "_";
-                  setComuna({ value: newValue, className: newClassName,errorText: newErrorText });
+                  setComuna({ key: comuna?.cod_comuna ?? '', value: comuna?.nombre ?? '', className: newClassName,errorText: newErrorText });
                 }}>
                     <IonSelectOption disabled value="">Selecciona una comuna</IonSelectOption>
-                    {regSel?.map((comuna, index) => (
-                        <IonSelectOption key={index} value={comuna}>
-                            {comuna}
+                    {regSel?.map((comuna) => (
+                        <IonSelectOption key={comuna.cod_comuna} value={comuna.nombre}>
+                            {comuna.nombre}
                         </IonSelectOption>
                     ))}
                 </IonSelect>
@@ -389,6 +442,7 @@ const Registrarse: React.FC = () => {
                   const newClassName = ""
                   const newErrorText = "_";
                   setPassword({ value: newValue, className: newClassName, errorText: newErrorText });
+                  setConfirmPasswordDisabled(newValue.length == 0);
                 }}>
             </IonInput>
 

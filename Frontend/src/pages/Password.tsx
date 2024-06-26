@@ -16,7 +16,7 @@ const Password: React.FC = () => {
 
   const [isConfirmPasswordDisabled, setConfirmPasswordDisabled] = useState(true);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let formValid = true;
 
@@ -38,6 +38,44 @@ const Password: React.FC = () => {
     //Codigo
     if(!validCode()){
       formValid = false;
+    }
+
+    if(formValid){
+      sendDataToBackend();
+    }
+  }
+
+  const sendDataToBackend = async () =>{
+    const data = {
+      email: fieldEmail.value,
+      newPassword: fieldNewPassword.value,
+      confirmPassword: fieldConfirmPassword.value,
+      confirmationCode: fieldCode.value,
+    };
+
+    try {
+      const response = await fetch('https://q3tdh7wk-3360.brs.devtunnels.ms/usuarios/cambio-clave', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        // Handle successful response
+        const responseData = await response.json();
+        console.log('Changes successful:', responseData);
+        // Redirect or show success message
+        history.goBack();
+      } else {
+        // Handle error response
+        console.error('Changes failed:', response.statusText);
+        // Show error message to the user
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Show error message to the user
     }
   }
 

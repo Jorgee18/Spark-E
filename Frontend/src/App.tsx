@@ -11,6 +11,8 @@ import Temperatura from './pages/Temperatura';
 import Comportamiento from './pages/Comportamiento';
 import Gas from './pages/Gas';
 import NotificacionEspecifica from './pages/NotificacionEspecifica'
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -44,7 +46,7 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+/*const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
@@ -95,6 +97,35 @@ const App: React.FC = () => (
 
       </IonRouterOutlet>
     </IonReactRouter>
+  </IonApp>
+);
+
+export default App;
+*/
+
+const App: React.FC = () => (
+  <IonApp>
+    <AuthProvider>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route exact path="/iniciar-sesion" component={IniciarSesion} />
+          <Route exact path="/registrarse" component={Registrarse} />
+          <Route exact path="/terminos-de-servicio" component={TerminosDeServicio} />
+          <Route exact path="/password" component={Password} />
+          
+          <ProtectedRoute exact path="/menu" component={Menu} />
+          <ProtectedRoute exact path="/notificaciones" component={Notificaciones} />
+          <ProtectedRoute exact path="/temperatura" component={Temperatura} />
+          <ProtectedRoute exact path="/gas" component={Gas} />
+          <ProtectedRoute exact path="/comportamiento" component={Comportamiento} />
+          <ProtectedRoute exact path="/notificacion-especifica" component={NotificacionEspecifica} />
+          
+          <Route exact path="/">
+            <Redirect to="/iniciar-sesion" />
+          </Route>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </AuthProvider>
   </IonApp>
 );
 
