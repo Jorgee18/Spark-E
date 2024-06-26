@@ -21,15 +21,18 @@ const getNotificacionesById = (req: any, res: any) => {
         let id_notificacion = req.params.id_notificacion;
         connection.query("SELECT * FROM notificacion WHERE id_notificación = ?", [id_notificacion],function(error:any,results:any,fields:any){
             res.send(JSON.stringify(results));
+
+            connection.query("UPDATE notificacion SET estado = ? WHERE id_notificación = ?", [true, id_notificacion], function(err:any,results:any,fields:any){
+                if(err){
+                    console.error(err);
+                }
+            } )
         });
     } catch (error: any) {
         res.status(500);
         res.send(error.message);
     }
-
-    /*
-    Actualizar el estado a "visto"
-    */ 
+ 
 };
 
 const crearNotificacion = (req: any, res: any) => {

@@ -7,8 +7,42 @@ import Button from '../components/Button'
 import NotificacionesState from '../components/NotificacionesState';
 import './Notificaciones.css';
 import '../theme/variables.css';
+import { useEffect, useState } from 'react';
+
+interface NotificacionItem {
+  "id_notificación": string;
+  titulo: string;
+  fecha: string;
+  "descripción": string;
+  estado: boolean;
+}
 
 const Notificaciones = () => { 
+  const [data, setData] = useState<NotificacionItem[]>([]);
+  
+  const fetchNotificaciones = async () => {
+    try {
+      const response = await fetch("http://localhost:3360/notificaciones/", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${sessionStorage.getItem("token")}`,
+            Identifier: `${sessionStorage.getItem("identificador")}` 
+        },
+        });
+      
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error('Error al obtener las notificaciones:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchNotificaciones();
+  }, []);
+  
+
   return (
     <IonPage id='Notificaciones'>
       <Header title="Notificaciones" />
@@ -19,14 +53,7 @@ const Notificaciones = () => {
         </IonToolbar>
 
         <IonList inset={true}>
-
-          <NotificacionesState state="Actualizacion de estado" info="No se han encontrado amenazas." fecha="06:11" visto={true}/>  
-          <NotificacionesState state="Actualizacion de estado" info="No se han encontrado amenazas." fecha="03:44" visto={false}/>  
-          <NotificacionesState state="Actualizacion de estado" info="Alerta: Se han detectado amenazas" fecha="Ayer" visto={true}/>  
-          <NotificacionesState state="Actualizacion de estado" info="Alerta: Se han detectado amenazas" fecha="Ayer" visto={false}/>  
-          <NotificacionesState state="Actualizacion de estado" info="No se han encontrado amenazas." fecha="26/05/24" visto={false}/>  
-          <NotificacionesState state="Actualizacion de estado" info="No se han encontrado amenazas." fecha="25/05/24" visto={true}/>  
-          <NotificacionesState state="Actualizacion de estado" info="No se han encontrado amenazas." fecha="24/05/24" visto={false}/>  
+            {data.map((notificacion, index) => (<NotificacionesState key={index} id={notificacion["id_notificación"]} state={notificacion.titulo} info={notificacion["descripción"]} fecha={notificacion.fecha} visto={notificacion.estado} />))}
 
         </IonList>
       </IonContent>

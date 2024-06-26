@@ -20,15 +20,17 @@ const getNotificacionesById = (req, res) => {
         let id_notificacion = req.params.id_notificacion;
         connection.query("SELECT * FROM notificacion WHERE id_notificación = ?", [id_notificacion], function (error, results, fields) {
             res.send(JSON.stringify(results));
+            connection.query("UPDATE notificacion SET estado = ? WHERE id_notificación = ?", [true, id_notificacion], function (err, results, fields) {
+                if (err) {
+                    console.error(err);
+                }
+            });
         });
     }
     catch (error) {
         res.status(500);
         res.send(error.message);
     }
-    /*
-    Actualizar el estado a "visto"
-    */
 };
 const crearNotificacion = (req, res) => {
     const connection = importConnection();
