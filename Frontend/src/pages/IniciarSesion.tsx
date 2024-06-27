@@ -70,7 +70,7 @@ const IniciarSesion: React.FC = () => {
         // Guarda el token en el almacenamiento local
         sessionStorage.setItem('token', responseData.token);
         // Guarda el id en el almacenamiento local
-        sessionStorage.setItem('identificador', responseData.id);
+        sessionStorage.setItem('identificador', responseData.identificador);
         // Redirect or show success message
         history.push('/menu');
         location.reload();

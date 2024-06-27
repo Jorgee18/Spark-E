@@ -6,4 +6,49 @@
     .image-container {
         margin-top: 5%;
     }
+
+    .map-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px;
+        box-sizing: border-box;
+    }
+
+    .map-table td {
+        width: 4%;
+        height: 20px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .map-container {
+        overflow: auto;
+        padding: 10px;
+      }
+
+    .C {
+        background-color: darkgreen;
+    }
+
+    .D {
+        background-color: lightgreen;
+    }
+
+    .O {
+        background-color: blue;
+    }
+
+    .T_A,
+    .G_A {
+        background-color: red;
+    }
+
+    .T_M,
+    .G_M {
+        background-color: yellow;
+    }
+
+    .X {
+        background-color: black;
+    }
 }

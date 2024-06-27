@@ -54,7 +54,7 @@ const Password: React.FC = () => {
     };
 
     try {
-      const response = await fetch('https://q3tdh7wk-3360.brs.devtunnels.ms/usuarios/cambio-clave', {
+      const response = await fetch('http://localhost:3360/usuarios/cambio-clave', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

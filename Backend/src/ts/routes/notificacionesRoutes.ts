@@ -13,4 +13,4 @@ router.post('/crear', jsonParser, notificacionesController.crearNotificacion);
 
 router.delete('/eliminar/:id_notificacion', auth.verifyRole, notificacionesController.eliminarNotificacion)
 
-module.exports = router; 
+module.exports = router;
